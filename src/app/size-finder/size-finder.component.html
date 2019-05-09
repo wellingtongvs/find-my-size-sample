@@ -1,17 +1,18 @@
 <div class="row">
   <div class="container">
-    <form id="sizeFinderForm" [formGroup]="sizeFinderForm" (ngSubmit)="onSubmit()">
-      <label>
+    <form id="sizeFinderForm" [formGroup]="sizeFinderForm" (ngSubmit)="onSubmit()" class="form-group">
+      <label for="product">
         Product code:
-        <input type="text" formControlName="product" class="form-control" placeholder="code">
       </label>
+      <input type="text" formControlName="product" class="form-control" placeholder="code">
       <br>
-      <label>
+      <label for="language">
         Language:
-        <input type="text" formControlName="language" class="form-control" placeholder="en">
       </label>
+      <input type="text" formControlName="language" class="form-control" placeholder="en">
       <br>
-      <button id="btnSubmitSizeFinder" [disabled]="!sizeFinderForm.valid" type="submit" color="primary">Submit</button>
+      <button id="btnSubmitSizeFinder" [disabled]="!sizeFinderForm.valid" type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
+  <app-size-finder-modal #modal></app-size-finder-modal>
 </div>

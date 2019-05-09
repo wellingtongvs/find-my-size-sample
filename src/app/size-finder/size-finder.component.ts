@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { SizeFinderModalComponent } from '../size-finder-modal/size-finder-modal.component';
 
 @Component({
   selector: 'app-size-finder',
@@ -7,9 +8,10 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./size-finder.component.scss']
 })
 export class SizeFinderComponent implements OnInit {
+  @ViewChild('modal') modal: SizeFinderModalComponent;
   sizeFinderForm;
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder) {
     this.sizeFinderForm = this.fb.group({
       product: ['', Validators.required],
       language: ['', Validators.required],
@@ -21,7 +23,8 @@ export class SizeFinderComponent implements OnInit {
 
   onSubmit() {
     if (this.sizeFinderForm.valid) {
-      console.warn(this.sizeFinderForm.value);
+      console.warn(this.sizeFinderForm.value.language);
+      this.modal.open(this.sizeFinderForm.value.product, this.sizeFinderForm.value.language);
     }
   }
 
