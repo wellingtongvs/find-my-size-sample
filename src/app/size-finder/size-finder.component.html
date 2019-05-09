@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="container">
+    <form id="sizeFinderForm" [formGroup]="sizeFinderForm" (ngSubmit)="onSubmit()">
+      <label>
+        Product code:
+        <input type="text" formControlName="product" class="form-control" placeholder="code">
+      </label>
+      <br>
+      <label>
+        Language:
+        <input type="text" formControlName="language" class="form-control" placeholder="en">
+      </label>
+      <br>
+      <button id="btnSubmitSizeFinder" [disabled]="!sizeFinderForm.valid" type="submit" color="primary">Submit</button>
+    </form>
+  </div>
+</div>
