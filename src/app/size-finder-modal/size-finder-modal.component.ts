@@ -23,12 +23,15 @@ export class SizeFinderModalComponent implements OnInit {
   @ViewChild('content') content;
 
   constructor(private fb: FormBuilder, private modal: NgbModal, private findSize: FindSizeService) {
+  }
+
+  ngOnInit() {
     this.sizeFinderModalForm = this.fb.group({
-      gender: ['', Validators.required],
-      height: ['', Validators.required],
-      weight: ['', Validators.required],
-      age: ['', Validators.required],
-      body_shape: ['', Validators.required],
+      gender: ['MALE', Validators.required],
+      height: ['188', Validators.required],
+      weight: ['80', Validators.required],
+      age: ['35', Validators.required],
+      body_shape: ['BOX', Validators.required],
     });
 
     this.heights = Array.from({length: 40}, (v, k) => k + 151);
@@ -36,28 +39,26 @@ export class SizeFinderModalComponent implements OnInit {
     this.ages = Array.from({length: 60}, (v, k) => k + 16);
   }
 
-  ngOnInit() {
-    this.sizeFinderModalForm.gender = 'MALE';
-  }
-
   onSubmit() {
     if (this.sizeFinderModalForm.valid) {
       this.submit();
+      this.nextPage();
     } else {
       this.sizeFinderModalForm.console.error();
     }
-    this.nextPage();
   }
 
-  open(product, language) {
-    this.product = product;
-    this.language = language;
+  open(prod, lang) {
+    this.product = prod;
+    this.language = lang;
     this.page = 1;
     this.modal.open(this.content, {ariaLabelledBy: 'modal-title'});
   }
 
   previousPage() {
-    this.page = this.page - 1;
+    if (this.page > 1) {
+      this.page = this.page - 1;
+    }
   }
 
   nextPage() {
@@ -75,7 +76,7 @@ export class SizeFinderModalComponent implements OnInit {
       height: this.sizeFinderModalForm.value.height,
       weight: this.sizeFinderModalForm.value.weight,
       age: this.sizeFinderModalForm.value.age,
-      body_shape: 'BOX',
+      body_shape: this.sizeFinderModalForm.value.body_shape,
       cup_cize_country: null,
       underbust_measurement: null,
       cup_size: null,
@@ -83,6 +84,10 @@ export class SizeFinderModalComponent implements OnInit {
       relevant_attributes: []
     };
 
-    this.findSize.getSize(data).subscribe(res => this.size = res);
+    this.findSize.getSize(data).subscribe(res => this.size = (res as string).split(' ')[0]);
+  }
+
+  onChanges(change) {
+    console.log(change);
   }
 }

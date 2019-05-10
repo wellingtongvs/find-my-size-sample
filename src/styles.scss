@@ -9,3 +9,15 @@ body {
 hr {
     border-color: #fff;
 }
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 60%;
+        margin: 1.75rem auto;
+        width: auto;
+    }
+
+    div img {
+        text-align: center;
+    }
+}

@@ -23,7 +23,6 @@ export class SizeFinderComponent implements OnInit {
 
   onSubmit() {
     if (this.sizeFinderForm.valid) {
-      console.warn(this.sizeFinderForm.value.language);
       this.modal.open(this.sizeFinderForm.value.product, this.sizeFinderForm.value.language);
     }
   }
