@@ -7,6 +7,21 @@ div {
 }
 
 .icon-images {
-    height: 200px;
-    width: auto;
+    text-align: center;
+    img {
+        height: 200px;
+        width: auto;
+    }
+}
+
+.form-pad {
+    padding-top: 10%;
+}
+
+.center-modal {
+    text-align: center;
+}
+
+.btn.btn-outline-dark.active {
+    background-color: rgba(52,58,64,0.3)!important;
 }

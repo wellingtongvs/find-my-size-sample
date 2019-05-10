@@ -12,13 +12,13 @@ export class SizeFinderComponent implements OnInit {
   sizeFinderForm;
 
   constructor(private fb: FormBuilder) {
+  }
+
+  ngOnInit() {
     this.sizeFinderForm = this.fb.group({
       product: ['', Validators.required],
       language: ['', Validators.required],
     });
-  }
-
-  ngOnInit() {
   }
 
   onSubmit() {

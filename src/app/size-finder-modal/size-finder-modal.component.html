@@ -11,7 +11,7 @@
   <form id="sizeFinderModalForm" [formGroup]="sizeFinderModalForm" class="form-group">
     <div class="modal-body">
       <div *ngIf="page == 1">
-        <div class="btn-group btn-group-toggle" ngbRadioGroup name="gender" formControlName="gender">
+        <div class="btn-group btn-group-toggle" ngbRadioGroup name="gender" formControlName="gender" (ngModelChange)="onChangeGender()">
           <label ngbButtonLabel class="btn-primary active">
             <input ngbButton type="radio" value="MALE"><fa name="mars"></fa>
           </label>
@@ -22,11 +22,11 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="row">
-              <div class="col-sm-6">
-                  <img class="icon-images" src="assets/img/man-height.svg">
+              <div class="col-sm-6 icon-images">
+                  <img *ngIf="gender === 'MALE'" src="assets/img/man-height.svg">
+                  <img *ngIf="gender === 'FEMALE'" src="assets/img/woman-height.svg">
               </div>
-              <div class="col-sm-6">
-                <!-- <img *ngIf="gender == FEMALE" class="icon-images" src="assets/img/woman-height.svg"> -->
+              <div class="col-sm-6 form-pad">
                 <label for="height">
                   Height:
                 </label>
@@ -38,14 +38,14 @@
           </div>
           <div class="col-sm-6">
             <div class="row">
-              <div class="col-sm-6">
-                <img class="icon-images" src="assets/img/body-weight.png">
+              <div class="col-sm-6 icon-images">
+                <img src="assets/img/body-weight.png">
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-6 form-pad">
                 <label for="weight">
                   Weight:
                 </label>
-                <select formControlName="weight" class="form-control">
+                <select formControlName="weight" class="form-control" >
                   <option *ngFor="let weight of weights" [ngValue]="weight">{{ weight }} kg</option>
                 </select>
               </div>
@@ -55,8 +55,8 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="row">
-              <div class="col-sm-6">
-                <img class="icon-images" src="assets/img/age.svg">
+              <div class="col-sm-6 icon-images">
+                <img src="assets/img/age.svg">
               </div>
               <div class="col-sm-6">
                 <label for="age">
@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="page == 2">
+      <div *ngIf="page == 2" class="center-modal">
         <label for="body_shape">
           Body shape:
         </label>
@@ -78,31 +78,37 @@
         <div class="btn-group btn-group-toggle" ngbRadioGroup name="body_shape" formControlName="body_shape">
           <label ngbButtonLabel class="btn btn-outline-dark">
             <input ngbButton type="radio" value="EGG">
-            <img *ngIf="gender == MALE" class="img-responsive" src="assets/img/men_apple.png">
-            <!-- <img *ngIf="gender == FEMALE" class="img-responsive" src="assets/img/women_apple.png"> -->
+            <img *ngIf="gender == 'MALE'" src="assets/img/men_apple.png">
+            <img *ngIf="gender == 'FEMALE'" src="assets/img/women_apple.png">
           </label>
-          <label ngbButtonLabel class="active btn btn-outline-dark">
+          <label ngbButtonLabel class="btn btn-outline-dark">
             <input ngbButton type="radio" value="BOX">
-            <img *ngIf="gender == MALE" class="img-responsive" src="assets/img/men_box.png">
-            <!-- <img *ngIf="gender == FEMALE" class="img-responsive" src="assets/img/women_box.png"> -->
+            <img *ngIf="gender == 'MALE'" src="assets/img/men_box.png">
+            <img *ngIf="gender == 'FEMALE'" src="assets/img/women_box.png">
           </label>
           <label ngbButtonLabel class="btn btn-outline-dark">
             <input ngbButton type="radio" value="V">
-            <img *ngIf="gender == MALE" class="img-responsive" src="assets/img/men_v-shape.png">
-            <!-- <img *nglse="gender == FEMALE" class="img-responsive" src="assets/img/women_v-shape.png"> -->
+            <img *ngIf="gender == 'MALE'" src="assets/img/men_v-shape.png">
+            <img *ngIf="gender == 'FEMALE'" src="assets/img/women_v-shape.png">
           </label>
         </div>
       </div>
-      <div *ngIf="page == 3">
-        <h3>Your size is:</h3>
-        <h4>{{ size }}</h4>
+      <div *ngIf="page == 3" class="center-modal">
+        <fa *ngIf="loading" size="3x" name="cog" animation="spin"></fa>
+        <div *ngIf="size != ''; else errorAlert">
+          <h3>Your size is:</h3>
+          <h4 >{{ size }}</h4>    
+        </div>
+        <ng-template #errorAlert>
+          <h4>{{ error }}</h4>
+        </ng-template>
       </div>
     </div>
     <div class="modal-footer">
-      <button *ngIf="page == 1" type="button" class="btn btn-outline-dark" (click)="nextPage()">Next</button>
-      <button *ngIf="page == 2" type="button" class="btn btn-outline-dark" (click)="previousPage()">Previous</button>
-      <button *ngIf="page == 2" type="submit" class="btn btn-outline-dark" (click)="onSubmit()">Get my size!</button>
-      <button *ngIf="page == 3" type="button" class="btn btn-outline-dark" (click)="modal.close()">Finish</button>
+      <button *ngIf="page == 1" type="button" class="btn btn-outline-dark float-right" (click)="nextPage()">Next</button>
+      <button *ngIf="page == 2" type="button" class="btn btn-outline-dark float-left" (click)="previousPage()">Previous</button>
+      <button *ngIf="page == 2" type="submit" class="btn btn-primary float-right" (click)="onSubmit()">Get my size!</button>
+      <button *ngIf="page == 3 && !loading" type="button" class="btn btn-success float-right" (click)="modal.close()">Finish</button>
     </div>
   </form>
 </ng-template>
