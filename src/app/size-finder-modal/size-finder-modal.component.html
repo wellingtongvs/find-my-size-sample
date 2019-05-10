@@ -7,30 +7,70 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form id="sizeFinderModalForm" [formGroup]="sizeFinderModalForm" (ngSubmit)="onSubmit(modal)" class="form-group">
+
+  <form id="sizeFinderModalForm" [formGroup]="sizeFinderModalForm" class="form-group">
     <div class="modal-body">
-          <label for="gender">
-            Gender:
+      <div *ngIf="page == 1">
+        <label for="gender">
+          Gender:
+        </label>
+        <div class="btn-group btn-group-toggle" ngbRadioGroup name="gender" formControlName="gender">
+          <label ngbButtonLabel class="btn-primary active">
+            <input ngbButton type="radio" value="MALE"><fa name="mars"></fa>
           </label>
-          <input type="text" formControlName="gender" class="form-control" placeholder="gender">
-          <br>
-          <label for="height">
-            Height:
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" value="FEMALE"><fa name="venus"></fa>
           </label>
-          <input type="text" formControlName="height" class="form-control" placeholder="height">
-          <br>
-          <label for="weight">
-            Weight:
+        </div>
+        <br>
+        <label for="height">
+          Height:
+        </label>
+        <select formControlName="height" class="form-control" placeholder="170 cm">
+          <option *ngFor="let height of heights" [ngValue]="height">{{ height }} cm</option>
+        </select>
+        <br>
+        <label for="weight">
+          Weight:
+        </label>
+        <select formControlName="weight" class="form-control" placeholder="70 kg">
+          <option *ngFor="let weight of weights" [ngValue]="weight">{{ weight }} kg</option>
+        </select>
+        <br>
+        <label for="age">
+          Age:
+        </label>
+        <select formControlName="age" class="form-control" placeholder="25">
+          <option *ngFor="let age of ages" [ngValue]="age">{{ age }}</option>
+        </select>
+        <br>
+      </div>
+      <div *ngIf="page == 2">
+        <label for="body_shape">
+          Body shape:
+        </label>
+        <div class="btn-group btn-group-toggle" ngbRadioGroup name="body_shape" formControlName="body_shape">
+          <label ngbButtonLabel class="btn-primary active">
+            <input ngbButton type="radio" value="BOX"><fa name="box"></fa>
           </label>
-          <input type="text" formControlName="weight" class="form-control" placeholder="weight">
-            <label for="age">
-              Age:
-            </label>
-          <input type="text" formControlName="age" class="form-control" placeholder="age">
-          <br>
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" value="CIRCLE"><fa name="circle"></fa>
+          </label>
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" value="TRIANGLE"><fa name="triangle"></fa>
+          </label>
+        </div>
+      </div>
+      <div *ngIf="page == 3">
+        <h3>Your size is:</h3>
+        <h4 [textContent]="size"></h4>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-outline-dark">Save</button>
+      <button *ngIf="page == 1" type="button" class="btn btn-outline-dark" (click)="nextPage()">Next</button>
+      <button *ngIf="page == 2" type="button" class="btn btn-outline-dark" (click)="previousPage()">Previous</button>
+      <button *ngIf="page == 2" type="submit" class="btn btn-outline-dark" (click)="onSubmit()">Get my size!</button>
+      <button *ngIf="page == 3" type="button" class="btn btn-outline-dark" (click)="modal.close()">Finish</button>
     </div>
   </form>
 </ng-template>
