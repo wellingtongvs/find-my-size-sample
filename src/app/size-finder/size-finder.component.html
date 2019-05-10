@@ -4,12 +4,12 @@
       <label for="product">
         Product code:
       </label>
-      <input type="text" formControlName="product" class="form-control" placeholder="code">
+      <input #product type="text" formControlName="product" class="form-control" placeholder="code">
       <br>
       <label for="language">
         Language:
       </label>
-      <input type="text" formControlName="language" class="form-control" placeholder="language">
+      <input #language type="text" formControlName="language" class="form-control" placeholder="language">
       <br>
       <button id="btnSubmitSizeFinder" [disabled]="!sizeFinderForm.valid" type="submit" class="btn btn-primary">Show my size</button>
     </form>

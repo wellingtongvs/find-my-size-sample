@@ -39,6 +39,7 @@ export class SizeFinderModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    // initialize reactive form group
     this.sizeFinderModalForm = this.fb.group({
       gender: ['MALE', Validators.required],
       height: [188, Validators.required],
